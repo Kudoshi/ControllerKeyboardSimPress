@@ -1,16 +1,19 @@
-# ControllerKeyboardSimPress
 A simple program to use controller to simulate keyboard key press. Can bypass some games' anti-simulate key press.
 
-Uses pycharm to get controller input
+Default Start/pause program: Ctrl+q
 
-Replace the '0x44' with the appropriate hexadecimal
+Two buttons methods:
+1. Auto release (Use pressKey(code,releaseDelay)
+Auto release after a small delay. Can't detect hold button down. 
 
-Format: '0x<keycode>'
-Look below for the keycode
-https://www.csee.umbc.edu/portal/help/theory/ascii.txt
-  
+2. Normal (Use PressKey(code) and ReleaseKey(code))
+Detects hold button down. Uses on button down and on button up.
 
-  
+Code Format: '0x<hexacode>' 
+Look below for the keycode https://www.csee.umbc.edu/portal/help/theory/ascii.txt
+
+Check documentation below for more info
+ 
 ---------------------------------------
 Pygame controller button (https://www.pygame.org/docs/ref/joystick.html):
   
