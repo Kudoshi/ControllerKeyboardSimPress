@@ -84,6 +84,8 @@ def pressKey(key, timeDelay):
         print("      > Latency: ", latency)
     # you can change 0x30 to any key you want. For more info look at :
     # msdn.microsoft.com/en-us/library/dd375731
+
+
 # endregion
 
 '''
@@ -91,8 +93,15 @@ A simple program to use controller to simulate keyboard key press. Can bypass so
 
 Default Start/pause program: Ctrl+q
 
-Replace the '0x44' with the appropriate hexadecimal 
-Format: '0x' 
+Two buttons methods:
+1. Auto release (Use pressKey(code,releaseDelay)
+Auto release after a small delay. Can't detect hold button down. 
+
+2. Normal (Use PressKey(code) and ReleaseKey(code))
+
+Detects hold button down. Uses on button down and on button up.
+
+Code Format: '0x<hexacode>' 
 Look below for the keycode https://www.csee.umbc.edu/portal/help/theory/ascii.txt
 
 Check documentation/readme for the appropriate button value/event
@@ -103,9 +112,10 @@ Check documentation/readme for the appropriate button value/event
 #region CONFIG
 releaseDelay = 0.008 #Press-release key delay. Some game needs higher delay to work.
 
-runLatency = False #Latency check test. From key press to release key latency
+runLatency = False #Latency check test. From key press to release key latency. [Works for pressKey function only]
 #endregion CONFIG
 
+#region Start Program
 playMode = False
 pygame.init()
 print("_"*70,"\n")
@@ -118,8 +128,9 @@ else:
     joystick = pygame.joystick.Joystick(0)
     joystick.init()
     print("[JOYSTICK INIT] Joystick initialized")
+#endregion
 
-#MAIN LOOP
+#MAIN LOOP - Change keycode here
 while True:
     events = pygame.event.get()
 
@@ -137,23 +148,22 @@ while True:
 
             #CHANGE KEYCODE OVER HERE.
 
-            if event.type == pygame.JOYBUTTONDOWN:
-                if joystick.get_button(10): #<-- change button value
-                    print("Pressed L1")
-                    #Change 0x46 to relevent hexadecimal keycode of the key
-                    pressKey(0x46, releaseDelay) #<-------
-                if joystick.get_button(9):
-                    print("Pressed R1")
-                    pressKey(0x44, releaseDelay)
-                if joystick.get_button(2):
-                    print("Pressed square")
-                    pressKey(0x44, releaseDelay)
+            if event.type == pygame.JOYBUTTONDOWN: #On button press down
+                #Auto-release method example
 
+                # if joystick.get_button(3): #<-- change button value
+                #     #Change 0x<code> to relevant hexadecimal keycode of the key
+                #     pressKey(0x46, releaseDelay) #<-------
+
+                # Normal method
+
+                if joystick.get_button(3):
+                    PressKey(0x5A)
                 if joystick.get_button(1):
-                    print("Pressed O")
-                    pressKey(0x46, releaseDelay)
+                    PressKey(0x58)
+            if event.type == pygame.JOYBUTTONUP: #On button release up
+                if not joystick.get_button(3):
+                    ReleaseKey(0x5A)
 
-
-
-
-
+                if not joystick.get_button(1):
+                    ReleaseKey(0x58)
