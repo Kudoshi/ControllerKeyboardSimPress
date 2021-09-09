@@ -98,7 +98,6 @@ Two buttons methods:
 Auto release after a small delay. Can't detect hold button down. 
 
 2. Normal (Use PressKey(code) and ReleaseKey(code))
-
 Detects hold button down. Uses on button down and on button up.
 
 Code Format: '0x<hexacode>' 
